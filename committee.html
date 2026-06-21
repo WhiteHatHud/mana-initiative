@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Committee — The Ma'na Initiative</title>
+  <meta name="description" content="Meet the Ma'na Initiative committee — Operations, Programmes, Publicity, and Internal Affairs.">
+  <link rel="canonical" href="https://mana-initiative.sg/committee">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600;1,700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+</head>
+<body>
+  <div id="nav-root"></div>
+  <main id="main-content">
+    <div class="page-header">
+      <div class="container">
+        <h1>Our Committee</h1>
+        <p>The student team behind The Ma'na Initiative.</p>
+      </div>
+    </div>
+
+    <section class="section surface-cream">
+      <div class="container">
+        <div id="committee-content" aria-live="polite">
+          <p style="color:var(--muted);">Loading…</p>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div id="footer-root"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="/js/config.js"></script>
+  <script src="/js/utils.js"></script>
+  <script src="/js/db.js"></script>
+  <script src="/js/layout.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async function () {
+      const content = document.getElementById('committee-content');
+      try {
+        const members = await window.getCommittee();
+        if (!members.length) {
+          content.innerHTML = `<div class="empty-state"><p>Committee details coming soon.</p></div>`;
+          return;
+        }
+        /* Group by department */
+        const depts = {};
+        members.forEach(m => {
+          const d = m.department || 'General';
+          if (!depts[d]) depts[d] = [];
+          depts[d].push(m);
+        });
+        content.innerHTML = Object.entries(depts).map(([dept, list]) => `
+          <div class="committee-dept">
+            <h2 class="committee-dept-title">${MANA.esc(dept)}</h2>
+            <div class="committee-grid">
+              ${list.map(m => {
+                const initials = m.name.split(' ').map(n => n[0]).slice(0,2).join('');
+                const photo = m.photo_url
+                  ? `<img class="committee-photo" src="${MANA.esc(m.photo_url)}" alt="${MANA.esc(m.name)}" loading="lazy">`
+                  : `<div class="committee-photo-placeholder" aria-hidden="true">${initials}</div>`;
+                return `
+                <div class="committee-member">
+                  ${photo}
+                  <h4>${MANA.esc(m.name)}</h4>
+                  <p>${MANA.esc(m.role)}</p>
+                </div>`;
+              }).join('')}
+            </div>
+          </div>`).join('');
+      } catch (err) {
+        console.error(err);
+        content.innerHTML = '<p style="color:var(--error);">Could not load committee members.</p>';
+      }
+    });
+  </script>
+</body>
+</html>

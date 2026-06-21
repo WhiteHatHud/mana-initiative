@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Engagements — The Ma'na Initiative</title>
+  <meta name="description" content="Past engagements — scholar visits, rihlah, conferences, and completed reading programmes.">
+  <link rel="canonical" href="https://mana-initiative.sg/engagements">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600;1,700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+</head>
+<body>
+  <div id="nav-root"></div>
+  <main id="main-content">
+    <div class="page-header">
+      <div class="container">
+        <h1>Past Engagements</h1>
+        <p>Conferences, scholar engagements, rihlah, and completed reading programmes.</p>
+      </div>
+    </div>
+
+    <section class="section surface-cream">
+      <div class="container">
+        <div id="engagements-grid" class="engagements-grid" aria-live="polite" aria-label="Engagements gallery">
+          <p style="color:var(--muted);">Loading…</p>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div id="footer-root"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="/js/config.js"></script>
+  <script src="/js/utils.js"></script>
+  <script src="/js/db.js"></script>
+  <script src="/js/layout.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async function () {
+      const grid = document.getElementById('engagements-grid');
+      try {
+        const items = await window.getEngagements();
+        if (!items.length) {
+          grid.innerHTML = '<div class="empty-state"><p>Engagements coming soon.</p></div>';
+          return;
+        }
+        grid.innerHTML = items.map(e => `
+          <div class="engagement-item">
+            ${e.image_url
+              ? `<img class="engagement-img" src="${MANA.esc(e.image_url)}" alt="${MANA.esc(e.title || e.caption || '')}" loading="lazy">`
+              : `<div class="engagement-placeholder" aria-hidden="true"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>`}
+            <div class="engagement-caption">${MANA.esc(e.caption || '')}</div>
+          </div>`).join('');
+      } catch (err) {
+        console.error(err);
+        grid.innerHTML = '<p style="color:var(--error);">Could not load engagements.</p>';
+      }
+    });
+  </script>
+</body>
+</html>

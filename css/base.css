@@ -1,0 +1,202 @@
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--leading-body);
+  color: var(--ink);
+  background: var(--cream);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+img, svg, video { display: block; max-width: 100%; }
+input, button, textarea, select { font: inherit; }
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; }
+h1,h2,h3,h4,h5,h6 {
+  font-family: var(--font-display);
+  line-height: var(--leading-display);
+  font-weight: 700;
+}
+
+/* ── Focus ── */
+:focus-visible {
+  outline: 2px solid var(--gold-deep);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ── Utilities ── */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ── Section rhythm ── */
+.section {
+  padding-block: var(--section-y-mobile);
+}
+@media (min-width: 1024px) {
+  .section { padding-block: var(--section-y-desktop); }
+}
+
+/* ── Surface modes ── */
+.surface-forest {
+  background: var(--forest);
+  color: var(--cream);
+}
+.surface-forest h1,
+.surface-forest h2,
+.surface-forest h3,
+.surface-forest h4 {
+  color: var(--gold);
+}
+.surface-forest p,
+.surface-forest li { color: var(--cream); }
+
+.surface-cream {
+  background: var(--cream);
+  color: var(--ink);
+}
+.surface-cream h1,
+.surface-cream h2,
+.surface-cream h3,
+.surface-cream h4 {
+  color: var(--forest);
+}
+
+/* ── Section heading ── */
+.section-eyebrow {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: var(--sp-3);
+  color: var(--gold);
+}
+.surface-cream .section-eyebrow { color: var(--gold-deep); }
+
+.section-title {
+  font-size: var(--text-3xl);
+  margin-bottom: var(--sp-4);
+}
+@media (min-width: 1024px) {
+  .section-title { font-size: var(--text-4xl); }
+}
+
+.section-body {
+  font-size: var(--text-lg);
+  max-width: 65ch;
+  line-height: var(--leading-body);
+}
+
+/* ── Crest divider ── */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  margin-block: var(--sp-12);
+}
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+}
+.surface-forest .divider::before,
+.surface-forest .divider::after { background: var(--border-dark); }
+.surface-cream .divider::before,
+.surface-cream .divider::after  { background: var(--border-light); }
+.divider-crest {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  opacity: 0.9;
+}
+
+/* ── Page header (inner pages) ── */
+.page-header {
+  background: var(--forest);
+  color: var(--cream);
+  padding-block: var(--sp-24) var(--sp-16);
+  text-align: center;
+}
+.page-header h1 {
+  color: var(--gold);
+  font-size: var(--text-4xl);
+  margin-bottom: var(--sp-4);
+}
+@media (min-width: 1024px) {
+  .page-header h1 { font-size: var(--text-5xl); }
+}
+.page-header p {
+  font-size: var(--text-lg);
+  color: var(--cream);
+  max-width: 60ch;
+  margin-inline: auto;
+  opacity: 0.9;
+}
+
+/* ── Back link ── */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--muted);
+  margin-bottom: var(--sp-8);
+  transition: color var(--duration) var(--ease);
+}
+.back-link:hover { color: var(--forest); }
+.back-link svg { flex-shrink: 0; }
+
+/* ── Empty state ── */
+.empty-state {
+  text-align: center;
+  padding: var(--sp-16) var(--sp-8);
+  color: var(--muted);
+}
+.empty-state p { font-size: var(--text-lg); }
+
+/* ── Skeleton loader ── */
+.skeleton {
+  background: linear-gradient(90deg, rgba(0,0,0,.06) 25%, rgba(0,0,0,.1) 50%, rgba(0,0,0,.06) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+  border-radius: var(--radius-sm);
+}
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ── Visually hidden but focusable (skip link) ── */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: var(--sp-4);
+  background: var(--forest);
+  color: var(--cream);
+  padding: var(--sp-2) var(--sp-4);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  z-index: 9999;
+  transition: top 0.1s;
+}
+.skip-link:focus { top: var(--sp-4); }

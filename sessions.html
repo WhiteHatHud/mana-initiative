@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sessions — The Ma'na Initiative</title>
+  <meta name="description" content="Browse upcoming and past reading sessions. Register to join or watch recordings of past sessions.">
+  <link rel="canonical" href="https://mana-initiative.sg/sessions">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600;1,700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+</head>
+<body>
+  <div id="nav-root"></div>
+  <main id="main-content">
+    <div class="page-header">
+      <div class="container">
+        <h1>Reading Sessions</h1>
+        <p>Monthly gatherings to read and discuss texts on Islam, theology, Sufism, and philosophy.</p>
+      </div>
+    </div>
+
+    <section class="section surface-cream">
+      <div class="container">
+        <!-- Filter bar -->
+        <div class="filter-bar" role="group" aria-label="Filter sessions">
+          <div class="filter-group">
+            <span class="filter-label" id="filter-label">Show:</span>
+            <button class="filter-btn active" data-filter="all" aria-pressed="true">All</button>
+            <button class="filter-btn" data-filter="upcoming" aria-pressed="false">Upcoming</button>
+            <button class="filter-btn" data-filter="past" aria-pressed="false">Past</button>
+          </div>
+          <div class="filter-group" style="margin-left:auto;">
+            <span class="filter-label">Sort:</span>
+            <button class="filter-btn active" data-sort="desc" aria-pressed="true">Newest first</button>
+            <button class="filter-btn" data-sort="asc" aria-pressed="false">Oldest first</button>
+          </div>
+        </div>
+
+        <!-- Sessions grid -->
+        <div id="sessions-grid" class="grid-sessions" role="list" aria-live="polite" aria-label="Sessions">
+          <p style="color:var(--muted);">Loading sessions…</p>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div id="footer-root"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="/js/config.js"></script>
+  <script src="/js/utils.js"></script>
+  <script src="/js/db.js"></script>
+  <script src="/js/layout.js"></script>
+  <script src="/js/sessions.js" defer></script>
+</body>
+</html>

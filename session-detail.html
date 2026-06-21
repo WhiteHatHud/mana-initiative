@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Session — The Ma'na Initiative</title>
+  <meta name="description" content="Register for or watch recordings of Ma'na Initiative reading sessions.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600;1,700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <style>
+    .session-detail-wrap {
+      display: grid;
+      gap: var(--sp-12);
+      padding-block: var(--sp-12);
+    }
+    @media (min-width: 1024px) {
+      .session-detail-wrap { grid-template-columns: 1fr 380px; align-items: start; }
+    }
+    .session-meta-list { display: flex; flex-direction: column; gap: var(--sp-3); margin-block: var(--sp-6); }
+    .session-meta-row { display: flex; align-items: center; gap: var(--sp-3); font-size: var(--text-sm); color: var(--muted); }
+    .session-meta-row svg { flex-shrink: 0; color: var(--forest); }
+    .register-card {
+      background: var(--cream-2);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-card);
+      padding: var(--sp-8);
+      position: sticky;
+      top: 88px;
+    }
+    .register-card h3 { font-size: var(--text-2xl); color: var(--forest); margin-bottom: var(--sp-6); }
+    .recording-card {
+      background: var(--forest);
+      border-radius: var(--radius-card);
+      padding: var(--sp-8);
+      text-align: center;
+      position: sticky;
+      top: 88px;
+    }
+    .recording-card h3 { color: var(--gold); font-size: var(--text-2xl); margin-bottom: var(--sp-4); }
+    .recording-card p { color: var(--cream); opacity: .8; font-size: var(--text-sm); margin-bottom: var(--sp-6); }
+  </style>
+</head>
+<body>
+  <div id="nav-root"></div>
+  <main id="main-content">
+    <section class="surface-cream">
+      <div class="container">
+        <div id="session-content">
+          <!-- Skeleton while loading -->
+          <div class="session-detail-wrap" id="session-skeleton">
+            <div>
+              <div class="skeleton" style="height:1.5rem;width:200px;margin-bottom:1.5rem;"></div>
+              <div class="skeleton" style="height:3rem;width:80%;margin-bottom:1rem;"></div>
+              <div class="skeleton" style="height:1rem;width:60%;margin-bottom:2rem;"></div>
+              <div class="skeleton" style="height:8rem;width:100%;"></div>
+            </div>
+            <div class="skeleton" style="height:400px;border-radius:var(--radius-card);"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div id="footer-root"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="/js/config.js"></script>
+  <script src="/js/utils.js"></script>
+  <script src="/js/db.js"></script>
+  <script src="/js/layout.js"></script>
+  <script src="/js/session-detail.js" defer></script>
+</body>
+</html>

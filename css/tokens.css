@@ -1,0 +1,68 @@
+:root {
+  /* ── Brand colours ── */
+  --forest:       #16331C;
+  --forest-2:     #1E3F26;
+  --gold:         #C2A14A;
+  --gold-deep:    #A6863A;
+  --cream:        #F6E8D2;
+  --cream-2:      #FBF2E2;
+  --ink:          #232318;
+  --muted:        #6B6A55;
+  --sage:         #5E7E5C;
+  --border-dark:  rgba(246,232,210,0.18);
+  --border-light: #E6DABF;
+  --success:      #3C7D5A;
+  --error:        #B23A2E;
+
+  /* ── Typography ── */
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body:    'Poppins', system-ui, -apple-system, sans-serif;
+
+  --text-xs:   0.75rem;
+  --text-sm:   0.875rem;
+  --text-base: 1rem;
+  --text-lg:   1.125rem;
+  --text-xl:   1.25rem;
+  --text-2xl:  1.5rem;
+  --text-3xl:  2rem;
+  --text-4xl:  2.5rem;
+  --text-5xl:  3.25rem;
+  --text-hero: 4rem;
+
+  --leading-body:    1.7;
+  --leading-display: 1.1;
+  --leading-snug:    1.3;
+
+  /* ── Spacing (4 px base) ── */
+  --sp-1:  0.25rem;
+  --sp-2:  0.5rem;
+  --sp-3:  0.75rem;
+  --sp-4:  1rem;
+  --sp-6:  1.5rem;
+  --sp-8:  2rem;
+  --sp-12: 3rem;
+  --sp-16: 4rem;
+  --sp-24: 6rem;
+
+  --section-y-mobile:  4rem;
+  --section-y-desktop: 6rem;
+
+  /* ── Layout ── */
+  --container-max: 1180px;
+  --gutter:        1.5rem;
+
+  /* ── Radius ── */
+  --radius-sm:   0.5rem;
+  --radius-card: 1rem;
+  --radius-input: 0.625rem;
+  --radius-pill: 999px;
+
+  /* ── Shadows ── */
+  --shadow-card:  0 1px 2px rgba(0,0,0,.05), 0 10px 28px rgba(22,51,28,.08);
+  --shadow-lift:  0 4px 6px rgba(0,0,0,.06), 0 20px 40px rgba(22,51,28,.14);
+  --shadow-focus: 0 0 0 2px var(--gold), 0 0 0 4px rgba(194,161,74,.25);
+
+  /* ── Transitions ── */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration: 200ms;
+}

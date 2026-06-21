@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — The Ma'na Initiative</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="admin-body">
+
+  <!-- Login screen -->
+  <div id="admin-login-view" class="admin-login-wrap">
+    <div class="admin-login-card">
+      <div class="login-logo">
+        <img src="/assets/crest.svg" alt="The Ma'na Initiative" width="48" height="48">
+        <p>The Ma'na Initiative</p>
+      </div>
+      <h1>Admin Login</h1>
+      <form id="login-form" class="admin-form-grid" novalidate>
+        <div class="admin-form-group">
+          <label class="admin-form-label" for="login-email">Email</label>
+          <input class="admin-form-input" type="email" id="login-email" name="email" required autocomplete="email" placeholder="committee@example.com">
+        </div>
+        <div class="admin-form-group">
+          <label class="admin-form-label" for="login-password">Password</label>
+          <input class="admin-form-input" type="password" id="login-password" name="password" required autocomplete="current-password" placeholder="••••••••">
+        </div>
+        <div class="form-status form-status-error" id="login-error">Invalid email or password.</div>
+        <button type="submit" class="btn-admin-primary" style="margin-top:.5rem;">Sign in</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Admin shell (shown after login) -->
+  <div id="admin-shell" class="admin-shell" style="display:none;">
+    <div class="admin-topbar">
+      <div class="admin-topbar-brand">
+        <img src="/assets/crest.svg" alt="" aria-hidden="true" width="28" height="28">
+        Ma'na Admin
+      </div>
+      <div class="admin-topbar-sep"></div>
+      <span class="admin-topbar-user" id="admin-user-email"></span>
+      <button class="admin-signout-btn" id="admin-signout">Sign out</button>
+    </div>
+
+    <div class="admin-content">
+
+      <!-- Overview stats -->
+      <div class="admin-stats" id="admin-stats" aria-label="Overview statistics">
+        <div class="admin-stat-card"><div class="stat-value" id="stat-sessions">—</div><div class="stat-label">Sessions</div></div>
+        <div class="admin-stat-card"><div class="stat-value" id="stat-books">—</div><div class="stat-label">Books</div></div>
+        <div class="admin-stat-card"><div class="stat-value" id="stat-registrations">—</div><div class="stat-label">Registrations</div></div>
+        <div class="admin-stat-card"><div class="stat-value" id="stat-subscribers">—</div><div class="stat-label">Subscribers</div></div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="admin-tabs" role="tablist">
+        <button class="admin-tab active" role="tab" aria-selected="true"  data-tab="sessions">Sessions</button>
+        <button class="admin-tab"        role="tab" aria-selected="false" data-tab="books">Booklist</button>
+        <button class="admin-tab"        role="tab" aria-selected="false" data-tab="engagements">Engagements</button>
+        <button class="admin-tab"        role="tab" aria-selected="false" data-tab="faqs">FAQs</button>
+        <button class="admin-tab"        role="tab" aria-selected="false" data-tab="registrations">Registrations</button>
+        <button class="admin-tab"        role="tab" aria-selected="false" data-tab="subscribers">Subscribers</button>
+        <button class="admin-tab"        role="tab" aria-selected="false" data-tab="notify">Notify</button>
+        <button class="admin-tab"        role="tab" aria-selected="false" data-tab="committee">Committee</button>
+      </div>
+
+      <!-- ── SESSIONS TAB ── -->
+      <div class="admin-panel active" id="tab-sessions" role="tabpanel">
+        <div class="admin-panel-header">
+          <h2>Sessions</h2>
+          <div class="admin-panel-actions">
+            <button class="btn-admin-primary" id="new-session-btn">+ New session</button>
+          </div>
+        </div>
+        <div class="admin-table-wrap">
+          <table class="admin-table" id="sessions-table">
+            <thead><tr><th>Title</th><th>Date</th><th>Medium</th><th>Upcoming</th><th>Published</th><th>Featured</th><th></th></tr></thead>
+            <tbody id="sessions-tbody"><tr><td colspan="7" style="text-align:center;color:var(--muted);padding:2rem;">Loading…</td></tr></tbody>
+          </table>
+        </div>
+        <!-- Session editor -->
+        <div class="admin-form-wrap" id="session-editor">
+          <h3 id="session-editor-title">New session</h3>
+          <form id="session-form" novalidate>
+            <input type="hidden" id="s-id" name="id">
+            <div class="admin-form-grid admin-form-grid-2">
+              <div class="admin-form-group">
+                <label class="admin-form-label" for="s-title">Title / Topic *</label>
+                <input class="admin-form-input" type="text" id="s-title" name="title" required placeholder="e.g. The Concept of Education in Islam">
+              </div>
+              <div class="admin-form-group">
+                <label class="admin-form-label" for="s-slug">Slug (URL) *</label>
+                <input class="admin-form-input" type="text" id="s-slug" name="slug" required placeholder="e.g. education-in-islam-1">
+              </div>
+              <div class="admin-form-group">
+                <label class="admin-form-label" for="s-date">Date *</label>
+                <input class="admin-form-input" type="date" id="s-date" name="date" required>
+              </div>
+              <div class="admin-form-group">
+                <label class="admin-form-label" for="s-time">Time</label>
+                <input class="admin-form-input" type="time" id="s-time" name="time">
+              </div>
+              <div class="admin-form-group">
+                <label class="admin-form-label" for="s-medium">Medium *</label>
+                <select class="admin-form-select" id="s-medium" name="medium" required>
+                  <option value="">— select —</option>
+                  <option value="in_person">In-person</option>
+                  <option value="online">Online</option>
+                  <option value="hybrid">Hybrid</option>
+                </select>
+              </div>
+              <div class="admin-form-group">
+                <label class="admin-form-label" for="s-location">Location</label>
+                <input class="admin-form-input" type="text" id="s-location" name="location" placeholder="e.g. NUS, Room B3-01">
+              </div>
+              <div class="admin-form-group">
+                <label class="admin-form-label" for="s-zoom">Zoom / Online link</label>
+                <input class="admin-form-input" type="url" id="s-zoom" name="zoom_url" placeholder="https://…">
+              </div>
+              <div class="admin-form-group">
+                <label class="admin-form-label" for="s-recording">Recording URL</label>
+                <input class="admin-form-input" type="url" id="s-recording" name="recording_url" placeholder="https://…">
+              </div>
+              <div class="admin-form-group">
+                <label class="admin-form-label" for="s-book-title">Book title</label>
+                <input class="admin-form-input" type="text" id="s-book-title" name="book_title" placeholder="e.g. The Concept of Education in Islam">
+              </div>
+              <div class="admin-form-group">
+                <label class="admin-form-label" for="s-book-author">Book author</label>
+                <input class="admin-form-input" type="text" id="s-book-author" name="book_author" placeholder="e.g. Syed M. Naquib Al-Attas">
+              </div>
+              <div class="admin-form-group">
+                <label class="admin-form-label" for="s-book-cover">Book cover URL</label>
+                <input class="admin-form-input" type="url" id="s-book-cover" name="book_cover_url" placeholder="https://…">
+              </div>
+            </div>
+            <div class="admin-form-group" style="margin-top:1rem;">
+              <label class="admin-form-label" for="s-description">Description</label>
+              <textarea class="admin-form-textarea" id="s-description" name="description" rows="4" placeholder="What will this session cover?"></textarea>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:1.5rem;margin-top:1.5rem;">
+              <label class="toggle-wrap">
+                <span class="toggle-label">Published</span>
+                <span class="toggle"><input type="checkbox" id="s-published" name="is_published"><span class="toggle-slider"></span></span>
+              </label>
+              <label class="toggle-wrap">
+                <span class="toggle-label">Upcoming</span>
+                <span class="toggle"><input type="checkbox" id="s-upcoming" name="is_upcoming" checked><span class="toggle-slider"></span></span>
+              </label>
+              <label class="toggle-wrap">
+                <span class="toggle-label">Featured on home</span>
+                <span class="toggle"><input type="checkbox" id="s-featured" name="is_featured"><span class="toggle-slider"></span></span>
+              </label>
+            </div>
+            <div class="form-status form-status-success" id="s-save-ok" style="margin-top:1rem;">Saved!</div>
+            <div class="form-status form-status-error" id="s-save-err" style="margin-top:1rem;">Error saving — please try again.</div>
+            <div class="admin-form-actions">
+              <button type="submit" class="btn-admin-primary">Save session</button>
+              <button type="button" class="btn-admin-secondary" id="s-cancel">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- ── BOOKS TAB ── -->
+      <div class="admin-panel" id="tab-books" role="tabpanel">
+        <div class="admin-panel-header">
+          <h2>Booklist</h2>
+          <div class="admin-panel-actions">
+            <button class="btn-admin-primary" id="new-book-btn">+ New book</button>
+          </div>
+        </div>
+        <div class="admin-table-wrap">
+          <table class="admin-table" id="books-table">
+            <thead><tr><th>Title</th><th>Author</th><th>Category</th><th>Status</th><th>Published</th><th></th></tr></thead>
+            <tbody id="books-tbody"><tr><td colspan="6" style="text-align:center;color:var(--muted);padding:2rem;">Loading…</td></tr></tbody>
+          </table>
+        </div>
+        <div class="admin-form-wrap" id="book-editor">
+          <h3 id="book-editor-title">New book</h3>
+          <form id="book-form" novalidate>
+            <input type="hidden" id="b-id" name="id">
+            <div class="admin-form-grid admin-form-grid-2">
+              <div class="admin-form-group">
+                <label class="admin-form-label" for="b-title">Title *</label>
+                <input class="admin-form-input" type="text" id="b-title" name="title" required placeholder="Book title">
+              </div>
+              <div class="admin-form-group">
+                <label class="admin-form-label" for="b-slug">Slug *</label>
+                <input class="admin-form-input" type="text" id="b-slug" name="slug" required placeholder="book-title-slug">
+              </div>
+              <div class="admin-form-group">
+                <label class="admin-form-label" for="b-author">Author</label>
+                <input class="admin-form-input" type="text" id="b-author" name="author" placeholder="Author name">
+              </div>
+              <div class="admin-form-group">
+                <label class="admin-form-label" for="b-category">Category</label>
+                <select class="admin-form-select" id="b-category" name="category">
+                  <option value="">— select —</option>
+                  <option>Theology</option><option>Sufism</option><option>Philosophy</option>
+                  <option>Ethics</option><option>Spirituality</option><option>Secularism &amp; Society</option><option>Other</option>
+                </select>
+              </div>
+              <div class="admin-form-group">
+                <label class="admin-form-label" for="b-status">Status *</label>
+                <select class="admin-form-select" id="b-status" name="status" required>
+                  <option value="">— select —</option>
+                  <option value="completed">Completed</option>
+                  <option value="reading">Currently reading</option>
+                  <option value="upcoming">Upcoming</option>
+                </select>
+              </div>
+              <div class="admin-form-group">
+                <label class="admin-form-label" for="b-cover">Cover image URL</label>
+                <input class="admin-form-input" type="url" id="b-cover" name="cover_url" placeholder="https://…">
+              </div>
+              <div class="admin-form-group" style="grid-column:1/-1;">
+                <label class="admin-form-label" for="b-supplier">Supplier note (internal)</label>
+                <input class="admin-form-input" type="text" id="b-supplier" name="supplier_note" placeholder="Ordering notes…">
+              </div>
+            </div>
+            <div style="margin-top:1.5rem;">
+              <label class="toggle-wrap">
+                <span class="toggle-label">Published</span>
+                <span class="toggle"><input type="checkbox" id="b-published" name="is_published"><span class="toggle-slider"></span></span>
+              </label>
+            </div>
+            <div class="form-status form-status-success" id="b-save-ok" style="margin-top:1rem;">Saved!</div>
+            <div class="form-status form-status-error" id="b-save-err" style="margin-top:1rem;">Error saving.</div>
+            <div class="admin-form-actions">
+              <button type="submit" class="btn-admin-primary">Save book</button>
+              <button type="button" class="btn-admin-secondary" id="b-cancel">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- ── ENGAGEMENTS TAB ── -->
+      <div class="admin-panel" id="tab-engagements" role="tabpanel">
+        <div class="admin-panel-header">
+          <h2>Engagements</h2>
+          <button class="btn-admin-primary" id="new-engagement-btn">+ New engagement</button>
+        </div>
+        <div class="admin-table-wrap">
+          <table class="admin-table"><thead><tr><th>Title</th><th>Caption</th><th>Sort</th><th>Published</th><th></th></tr></thead>
+            <tbody id="engagements-tbody"><tr><td colspan="5" style="text-align:center;color:var(--muted);padding:2rem;">Loading…</td></tr></tbody>
+          </table>
+        </div>
+        <div class="admin-form-wrap" id="engagement-editor">
+          <h3>Engagement</h3>
+          <form id="engagement-form" novalidate>
+            <input type="hidden" id="e-id" name="id">
+            <div class="admin-form-grid admin-form-grid-2">
+              <div class="admin-form-group">
+                <label class="admin-form-label" for="e-title">Title</label>
+                <input class="admin-form-input" type="text" id="e-title" name="title" placeholder="Short title">
+              </div>
+              <div class="admin-form-group">
+                <label class="admin-form-label" for="e-sort">Sort order</label>
+                <input class="admin-form-input" type="number" id="e-sort" name="sort_order" value="0">
+              </div>
+              <div class="admin-form-group" style="grid-column:1/-1;">
+                <label class="admin-form-label" for="e-caption">Caption</label>
+                <textarea class="admin-form-textarea" id="e-caption" name="caption" rows="3" placeholder="Caption shown below the image…"></textarea>
+              </div>
+              <div class="admin-form-group" style="grid-column:1/-1;">
+                <label class="admin-form-label" for="e-image">Image URL</label>
+                <input class="admin-form-input" type="url" id="e-image" name="image_url" placeholder="https://…">
+                <p style="font-size:var(--text-xs);color:var(--muted);margin-top:.25rem;">Upload to Supabase Storage and paste the public URL here.</p>
+              </div>
+            </div>
+            <div style="margin-top:1rem;">
+              <label class="toggle-wrap">
+                <span class="toggle-label">Published</span>
+                <span class="toggle"><input type="checkbox" id="e-published" name="is_published"><span class="toggle-slider"></span></span>
+              </label>
+            </div>
+            <div class="form-status form-status-success" id="e-save-ok" style="margin-top:1rem;">Saved!</div>
+            <div class="form-status form-status-error" id="e-save-err" style="margin-top:1rem;">Error saving.</div>
+            <div class="admin-form-actions">
+              <button type="submit" class="btn-admin-primary">Save</button>
+              <button type="button" class="btn-admin-secondary" id="e-cancel">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- ── FAQS TAB ── -->
+      <div class="admin-panel" id="tab-faqs" role="tabpanel">
+        <div class="admin-panel-header">
+          <h2>FAQs</h2>
+          <button class="btn-admin-primary" id="new-faq-btn">+ New FAQ</button>
+        </div>
+        <div class="admin-table-wrap">
+          <table class="admin-table"><thead><tr><th>Question</th><th>Sort</th><th>Published</th><th></th></tr></thead>
+            <tbody id="faqs-tbody"><tr><td colspan="4" style="text-align:center;color:var(--muted);padding:2rem;">Loading…</td></tr></tbody>
+          </table>
+        </div>
+        <div class="admin-form-wrap" id="faq-editor">
+          <h3>FAQ</h3>
+          <form id="faq-form" novalidate>
+            <input type="hidden" id="f-id" name="id">
+            <div class="admin-form-grid">
+              <div class="admin-form-group">
+                <label class="admin-form-label" for="f-question">Question *</label>
+                <input class="admin-form-input" type="text" id="f-question" name="question" required placeholder="Question text">
+              </div>
+              <div class="admin-form-group">
+                <label class="admin-form-label" for="f-answer">Answer *</label>
+                <textarea class="admin-form-textarea" id="f-answer" name="answer" required rows="4" placeholder="Answer text"></textarea>
+              </div>
+              <div class="admin-form-group">
+                <label class="admin-form-label" for="f-sort">Sort order</label>
+                <input class="admin-form-input" type="number" id="f-sort" name="sort_order" value="0">
+              </div>
+            </div>
+            <div style="margin-top:1rem;">
+              <label class="toggle-wrap">
+                <span class="toggle-label">Published</span>
+                <span class="toggle"><input type="checkbox" id="f-published" name="is_published"><span class="toggle-slider"></span></span>
+              </label>
+            </div>
+            <div class="form-status form-status-success" id="f-save-ok" style="margin-top:1rem;">Saved!</div>
+            <div class="form-status form-status-error" id="f-save-err" style="margin-top:1rem;">Error saving.</div>
+            <div class="admin-form-actions">
+              <button type="submit" class="btn-admin-primary">Save</button>
+              <button type="button" class="btn-admin-secondary" id="f-cancel">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- ── REGISTRATIONS TAB ── -->
+      <div class="admin-panel" id="tab-registrations" role="tabpanel">
+        <div class="admin-panel-header">
+          <h2>Registrations</h2>
+          <button class="btn-admin-secondary" id="export-registrations">Export CSV</button>
+        </div>
+        <div class="admin-table-wrap">
+          <table class="admin-table"><thead><tr><th>Name</th><th>Email</th><th>IHL</th><th>Medium pref</th><th>Session</th><th>Date</th></tr></thead>
+            <tbody id="registrations-tbody"><tr><td colspan="6" style="text-align:center;color:var(--muted);padding:2rem;">Loading…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── SUBSCRIBERS TAB ── -->
+      <div class="admin-panel" id="tab-subscribers" role="tabpanel">
+        <div class="admin-panel-header">
+          <h2>Subscribers &amp; Join Interest</h2>
+          <div class="admin-panel-actions">
+            <button class="btn-admin-secondary" id="export-subscribers">Export subscribers CSV</button>
+            <button class="btn-admin-secondary" id="export-joiners">Export join interest CSV</button>
+          </div>
+        </div>
+        <h3 style="font-size:var(--text-lg);color:var(--forest);margin-bottom:1rem;">Subscribers</h3>
+        <div class="admin-table-wrap" style="margin-bottom:2rem;">
+          <table class="admin-table"><thead><tr><th>Email</th><th>Phone</th><th>Source</th><th>Date</th></tr></thead>
+            <tbody id="subscribers-tbody"><tr><td colspan="4" style="text-align:center;color:var(--muted);padding:2rem;">Loading…</td></tr></tbody>
+          </table>
+        </div>
+        <h3 style="font-size:var(--text-lg);color:var(--forest);margin-bottom:1rem;">Join interest</h3>
+        <div class="admin-table-wrap">
+          <table class="admin-table"><thead><tr><th>Name</th><th>Email</th><th>IHL</th><th>Motivation</th><th>Date</th></tr></thead>
+            <tbody id="joiners-tbody"><tr><td colspan="5" style="text-align:center;color:var(--muted);padding:2rem;">Loading…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── NOTIFY TAB ── -->
+      <div class="admin-panel" id="tab-notify" role="tabpanel">
+        <div class="admin-panel-header"><h2>Notify Subscribers</h2></div>
+        <div class="notify-form">
+          <h3>Send an announcement</h3>
+          <p>Select an upcoming session and send an email announcement to all subscribers.</p>
+          <form id="notify-form" class="admin-form-grid" novalidate>
+            <div class="admin-form-group">
+              <label class="admin-form-label" for="notify-session">Session to announce *</label>
+              <select class="admin-form-select" id="notify-session" name="session_id" required>
+                <option value="">— select a session —</option>
+              </select>
+            </div>
+            <div class="admin-form-group">
+              <label class="admin-form-label" for="notify-message">Additional message (optional)</label>
+              <textarea class="admin-form-textarea" id="notify-message" name="message" rows="4" placeholder="Add a personal note to the announcement email…"></textarea>
+            </div>
+            <div class="form-status form-status-success" id="notify-ok">Announcement sent!</div>
+            <div class="form-status form-status-error"   id="notify-err">Error sending — check the API function and RESEND_API_KEY.</div>
+            <button type="submit" class="btn-admin-primary" style="align-self:flex-start;">Send announcement</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- ── COMMITTEE TAB ── -->
+      <div class="admin-panel" id="tab-committee" role="tabpanel">
+        <div class="admin-panel-header">
+          <h2>Committee Members</h2>
+          <button class="btn-admin-primary" id="new-member-btn">+ New member</button>
+        </div>
+        <p style="font-size:var(--text-sm);color:var(--error);margin-bottom:1rem;">⚠️ Only publish a member after obtaining their explicit consent.</p>
+        <div class="admin-table-wrap">
+          <table class="admin-table"><thead><tr><th>Name</th><th>Role</th><th>Dept</th><th>Consented</th><th>Published</th><th></th></tr></thead>
+            <tbody id="committee-tbody"><tr><td colspan="6" style="text-align:center;color:var(--muted);padding:2rem;">Loading…</td></tr></tbody>
+          </table>
+        </div>
+        <div class="admin-form-wrap" id="member-editor">
+          <h3>Committee member</h3>
+          <form id="member-form" novalidate>
+            <input type="hidden" id="m-id" name="id">
+            <div class="admin-form-grid admin-form-grid-2">
+              <div class="admin-form-group">
+                <label class="admin-form-label" for="m-name">Name *</label>
+                <input class="admin-form-input" type="text" id="m-name" name="name" required placeholder="Full name">
+              </div>
+              <div class="admin-form-group">
+                <label class="admin-form-label" for="m-role">Role *</label>
+                <input class="admin-form-input" type="text" id="m-role" name="role" required placeholder="e.g. Director of Programmes">
+              </div>
+              <div class="admin-form-group">
+                <label class="admin-form-label" for="m-dept">Department</label>
+                <input class="admin-form-input" type="text" id="m-dept" name="department" placeholder="e.g. Programmes">
+              </div>
+              <div class="admin-form-group">
+                <label class="admin-form-label" for="m-sort">Sort order</label>
+                <input class="admin-form-input" type="number" id="m-sort" name="sort_order" value="0">
+              </div>
+              <div class="admin-form-group" style="grid-column:1/-1;">
+                <label class="admin-form-label" for="m-photo">Photo URL</label>
+                <input class="admin-form-input" type="url" id="m-photo" name="photo_url" placeholder="https://…">
+              </div>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:1.5rem;margin-top:1.5rem;">
+              <label class="toggle-wrap">
+                <span class="toggle-label">Consent given</span>
+                <span class="toggle"><input type="checkbox" id="m-consent" name="consent_to_publish"><span class="toggle-slider"></span></span>
+              </label>
+              <label class="toggle-wrap">
+                <span class="toggle-label">Published</span>
+                <span class="toggle"><input type="checkbox" id="m-published" name="is_published"><span class="toggle-slider"></span></span>
+              </label>
+            </div>
+            <div class="form-status form-status-success" id="m-save-ok" style="margin-top:1rem;">Saved!</div>
+            <div class="form-status form-status-error" id="m-save-err" style="margin-top:1rem;">Error saving.</div>
+            <div class="admin-form-actions">
+              <button type="submit" class="btn-admin-primary">Save member</button>
+              <button type="button" class="btn-admin-secondary" id="m-cancel">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div><!-- /admin-content -->
+  </div><!-- /admin-shell -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="/js/config.js"></script>
+  <script src="/js/utils.js"></script>
+  <script src="/js/db.js"></script>
+  <script src="/js/admin.js" defer></script>
+</body>
+</html>

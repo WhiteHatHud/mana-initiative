@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — The Ma'na Initiative</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <style>
+    .prose { max-width: 72ch; }
+    .prose h2 { font-size: var(--text-2xl); color: var(--forest); margin: 2.5rem 0 1rem; }
+    .prose h3 { font-size: var(--text-xl); color: var(--forest); margin: 2rem 0 .75rem; }
+    .prose p  { margin-bottom: 1rem; color: var(--ink); }
+    .prose ul { margin: .5rem 0 1rem 1.5rem; list-style: disc; }
+    .prose li { margin-bottom: .5rem; color: var(--ink); }
+    .prose a  { color: var(--forest); text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div id="nav-root"></div>
+  <main id="main-content">
+    <div class="page-header">
+      <div class="container">
+        <h1>Privacy Policy</h1>
+        <p>How The Ma'na Initiative collects and uses your information.</p>
+      </div>
+    </div>
+    <section class="section surface-cream">
+      <div class="container">
+        <div class="prose">
+          <p><strong>Last updated: June 2026.</strong> This policy describes how The Ma'na Initiative ("we", "us", "our") handles personal information collected on this website.</p>
+
+          <h2>What we collect</h2>
+          <p>We collect information you provide directly:</p>
+          <ul>
+            <li><strong>Registration:</strong> name, email, school/IHL, preferred medium, optional notes — to manage session attendance.</li>
+            <li><strong>Subscribe:</strong> email address (and optionally phone) — to send session announcements.</li>
+            <li><strong>Join interest:</strong> name, email, school/IHL, optional motivation — to welcome you to the community.</li>
+            <li><strong>Contact form:</strong> name, email, message — to respond to your enquiry.</li>
+          </ul>
+          <p>We do not collect payment information, run advertising, or sell data to third parties.</p>
+
+          <h2>How we use it</h2>
+          <ul>
+            <li>To send session announcements and reminders (if you subscribed).</li>
+            <li>To manage registrations for sessions.</li>
+            <li>To respond to contact form enquiries.</li>
+            <li>For internal planning (session attendance, community size).</li>
+          </ul>
+
+          <h2 id="cookies">Cookies</h2>
+          <p>We use a single cookie/localStorage entry (<code>mana_cookie_consent</code>) to remember your cookie preference. No tracking cookies, no advertising pixels.</p>
+
+          <h2>Data storage</h2>
+          <p>Data is stored in Supabase (hosted Postgres) in Singapore or the nearest available region. Access is restricted to committee members via authenticated login. Data is not shared with third parties except as required by law.</p>
+
+          <h2>Committee member photos &amp; names</h2>
+          <p>We publish a committee member's name and photo only after obtaining their explicit consent. Members may withdraw consent at any time by contacting us.</p>
+
+          <h2>Your rights</h2>
+          <p>You may request access to, correction of, or deletion of your personal data at any time by emailing <a href="mailto:hello@mana-initiative.sg">hello@mana-initiative.sg</a>.</p>
+
+          <h2>Contact</h2>
+          <p>Questions about this policy: <a href="mailto:hello@mana-initiative.sg">hello@mana-initiative.sg</a></p>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div id="footer-root"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="/js/config.js"></script>
+  <script src="/js/utils.js"></script>
+  <script src="/js/db.js"></script>
+  <script src="/js/layout.js"></script>
+</body>
+</html>

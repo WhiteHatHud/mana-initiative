@@ -1,0 +1,13 @@
+{
+  "name": "mana-initiative",
+  "version": "1.0.0",
+  "description": "The Ma'na Initiative website",
+  "private": true,
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.0",
+    "resend": "^4.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

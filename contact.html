@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — The Ma'na Initiative</title>
+  <meta name="description" content="Get in touch with The Ma'na Initiative. We'd love to hear from you.">
+  <link rel="canonical" href="https://mana-initiative.sg/contact">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600;1,700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <style>
+    .contact-grid { display: grid; gap: var(--sp-12); }
+    @media (min-width: 768px) { .contact-grid { grid-template-columns: 1fr 340px; } }
+    .contact-info-block { display: flex; flex-direction: column; gap: var(--sp-6); }
+    .contact-info-item { display: flex; gap: var(--sp-4); align-items: flex-start; }
+    .contact-info-icon {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: rgba(22,51,28,.08);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; color: var(--forest);
+    }
+    .contact-info-text h4 { font-family: var(--font-body); font-size: var(--text-sm); font-weight: 600; color: var(--forest); margin-bottom: .25rem; }
+    .contact-info-text a { color: var(--forest); text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div id="nav-root"></div>
+  <main id="main-content">
+    <div class="page-header">
+      <div class="container">
+        <h1>Contact Us</h1>
+        <p>Questions, feedback, or just want to say salam — we're here.</p>
+      </div>
+    </div>
+
+    <section class="section surface-cream">
+      <div class="container">
+        <div class="contact-grid">
+
+          <!-- Form -->
+          <div>
+            <h2 style="font-size:var(--text-2xl);color:var(--forest);margin-bottom:2rem;">Send us a message</h2>
+            <form id="contact-form" class="form-stack" novalidate>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="c-name">Your name <span class="required">*</span></label>
+                  <input class="form-input" type="text" id="c-name" name="name" required autocomplete="name" placeholder="Name">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="c-email">Email <span class="required">*</span></label>
+                  <input class="form-input" type="email" id="c-email" name="email" required autocomplete="email" placeholder="you@example.com">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="c-message">Message <span class="required">*</span></label>
+                <textarea class="form-textarea" id="c-message" name="message" required rows="6" placeholder="How can we help?"></textarea>
+              </div>
+              <div class="form-status form-status-success" id="contact-success">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                Message sent! We'll get back to you soon, insya'Allah.
+              </div>
+              <div class="form-status form-status-error" id="contact-error">
+                Something went wrong — please try again or email us directly.
+              </div>
+              <button type="submit" class="btn btn-primary-forest" style="align-self:flex-start;">Send message</button>
+            </form>
+          </div>
+
+          <!-- Info -->
+          <aside>
+            <h2 style="font-size:var(--text-2xl);color:var(--forest);margin-bottom:2rem;">Get in touch</h2>
+            <div class="contact-info-block">
+              <div class="contact-info-item">
+                <div class="contact-info-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                </div>
+                <div class="contact-info-text">
+                  <h4>Email</h4>
+                  <a href="mailto:hello@mana-initiative.sg">hello@mana-initiative.sg</a>
+                </div>
+              </div>
+              <div class="contact-info-item">
+                <div class="contact-info-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+                </div>
+                <div class="contact-info-text">
+                  <h4>Instagram</h4>
+                  <a href="https://instagram.com/manainitiative" target="_blank" rel="noopener">@manainitiative</a>
+                </div>
+              </div>
+              <div class="contact-info-item">
+                <div class="contact-info-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                </div>
+                <div class="contact-info-text">
+                  <h4>Location</h4>
+                  <p style="color:var(--muted);font-size:var(--text-sm);">Singapore</p>
+                </div>
+              </div>
+            </div>
+            <div style="margin-top:2rem;padding:1.5rem;background:var(--cream-2);border-radius:var(--radius-card);border:1px solid var(--border-light);">
+              <p style="font-size:var(--text-sm);color:var(--muted);margin-bottom:1rem;">Want to join the reading circle?</p>
+              <a href="/join" class="btn btn-primary-forest btn-sm">Join the circle</a>
+            </div>
+          </aside>
+
+        </div>
+      </div>
+    </section>
+  </main>
+  <div id="footer-root"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="/js/config.js"></script>
+  <script src="/js/utils.js"></script>
+  <script src="/js/db.js"></script>
+  <script src="/js/layout.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const form = document.getElementById('contact-form');
+      const ok   = document.getElementById('contact-success');
+      const err  = document.getElementById('contact-error');
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        ok.classList.remove('show');
+        err.classList.remove('show');
+        const btn = form.querySelector('button[type=submit]');
+        btn.disabled = true;
+        btn.textContent = 'Sending…';
+        const data = new FormData(form);
+        try {
+          await window.submitContactMessage({
+            name:    data.get('name'),
+            email:   data.get('email'),
+            message: data.get('message'),
+          });
+          ok.classList.add('show');
+          form.reset();
+        } catch {
+          err.classList.add('show');
+        } finally {
+          btn.disabled = false;
+          btn.textContent = 'Send message';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
