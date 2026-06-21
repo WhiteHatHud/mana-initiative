@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -9,9 +9,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600;1,700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/tokens.css">
-  <link rel="stylesheet" href="/css/base.css">
-  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
 </head>
 <body>
   <div id="nav-root"></div>
@@ -102,12 +102,12 @@
               Welcome to the Ma'na community! We'll be in touch before the next session.
             </div>
             <div class="form-status form-status-error" id="join-error">
-              Something went wrong — please try again or <a href="/contact" style="color:var(--error);text-decoration:underline;">contact us directly</a>.
+              Something went wrong — please try again or <a href="contact" style="color:var(--error);text-decoration:underline;">contact us directly</a>.
             </div>
             <button type="submit" class="btn btn-primary" style="align-self:flex-start;">Send interest</button>
           </form>
           <p style="margin-top:1rem; font-size:var(--text-xs); color:rgba(246,232,210,.45);">
-            Your details are kept private. See our <a href="/privacy" style="color:var(--gold);">Privacy Policy</a>.
+            Your details are kept private. See our <a href="privacy" style="color:var(--gold);">Privacy Policy</a>.
           </p>
         </div>
       </div>
@@ -116,10 +116,10 @@
   </main>
   <div id="footer-root"></div>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-  <script src="/js/config.js"></script>
-  <script src="/js/utils.js"></script>
-  <script src="/js/db.js"></script>
-  <script src="/js/layout.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/db.js"></script>
+  <script src="js/layout.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       const form = document.getElementById('join-form');

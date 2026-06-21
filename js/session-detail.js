@@ -1,10 +1,16 @@
 document.addEventListener('DOMContentLoaded', async function () {
-  /* Get slug from URL path: /sessions/my-session-slug */
-  const slug = window.location.pathname.replace(/^\/sessions\//, '').replace(/\/$/, '');
+  const BASE = location.hostname.endsWith('.github.io')
+    ? '/' + location.pathname.split('/').filter(Boolean)[0]
+    : '';
+
+  /* Slug from query string (?slug=...) on GitHub Pages, or from URL path on Vercel */
+  const params = new URLSearchParams(window.location.search);
+  const slug = params.get('slug') ||
+    window.location.pathname.replace(/.*\/sessions\//, '').replace(/\/$/, '');
   const content = document.getElementById('session-content');
 
   if (!slug) {
-    window.location.href = '/sessions';
+    window.location.href = BASE + '/sessions';
     return;
   }
 
@@ -15,7 +21,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     content.innerHTML = `<div style="padding:4rem 0;text-align:center;">
       <h2 style="color:var(--forest);">Session not found</h2>
       <p style="margin:1rem 0 2rem;color:var(--muted);">This session may have been removed or the link may be incorrect.</p>
-      <a href="/sessions" class="btn btn-primary-forest">See all sessions</a>
+      <a href="${BASE}/sessions" class="btn btn-primary-forest">See all sessions</a>
     </div>`;
     return;
   }
@@ -34,7 +40,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   <div class="session-detail-wrap">
     <!-- Main info -->
     <div>
-      <a href="/sessions" class="back-link">
+      <a href="${BASE}/sessions" class="back-link">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
         All sessions
       </a>
@@ -167,12 +173,12 @@ function buildRecordingCard(session) {
     </a>
     <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border-dark);">
       <p style="font-size:var(--text-sm);color:rgba(246,232,210,.65);margin-bottom:.75rem;">Missed this one? Join us next time.</p>
-      <a href="/sessions" class="btn btn-ghost btn-sm" style="width:100%;">See upcoming sessions</a>
+      <a href="${BASE}/sessions" class="btn btn-ghost btn-sm" style="width:100%;">See upcoming sessions</a>
     </div>
   </div>` : `
   <div class="recording-card">
     <h3>Recording pending</h3>
     <p>The recording for this session will be available soon. Subscribe to be notified.</p>
-    <a href="/#subscribe" class="btn btn-primary" style="width:100%;">Subscribe for updates</a>
+    <a href="${BASE}/#subscribe" class="btn btn-primary" style="width:100%;">Subscribe for updates</a>
   </div>`;
 }

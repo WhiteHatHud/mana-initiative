@@ -1,36 +1,41 @@
 /* ── Injects nav + footer, sets up mobile menu, cookie consent, active links ── */
 (function () {
+  // Detect base path for GitHub Pages deploys (e.g. /mana-initiative); empty on Vercel/localhost.
+  const BASE = location.hostname.endsWith('.github.io')
+    ? '/' + location.pathname.split('/').filter(Boolean)[0]
+    : '';
+
   const NAV_HTML = `
 <a class="skip-link" href="#main-content">Skip to content</a>
 <header class="site-header" id="site-header" role="banner">
   <div class="header-inner container">
     <nav class="nav-left" aria-label="Primary navigation">
-      <a href="/about">About</a>
-      <a href="/sessions">Sessions</a>
-      <a href="/booklist">Booklist</a>
+      <a href="${BASE}/about">About</a>
+      <a href="${BASE}/sessions">Sessions</a>
+      <a href="${BASE}/booklist">Booklist</a>
     </nav>
-    <a href="/" class="wordmark" aria-label="The Ma'na Initiative — home">
-      <img src="/assets/crest.svg" class="wordmark-crest" alt="The Ma'na Initiative crest" width="36" height="36">
+    <a href="${BASE}/" class="wordmark" aria-label="The Ma'na Initiative — home">
+      <img src="${BASE}/assets/crest.svg" class="wordmark-crest" alt="The Ma'na Initiative crest" width="36" height="36">
       <span class="wordmark-text">The Ma'na Initiative</span>
     </a>
     <nav class="nav-right" aria-label="Secondary navigation">
-      <a href="/engagements">Engagements</a>
-      <a href="/join">Join</a>
-      <a href="/faqs">FAQs</a>
-      <a href="/contact">Contact</a>
+      <a href="${BASE}/engagements">Engagements</a>
+      <a href="${BASE}/join">Join</a>
+      <a href="${BASE}/faqs">FAQs</a>
+      <a href="${BASE}/contact">Contact</a>
     </nav>
     <button class="hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-drawer">
       <span></span><span></span><span></span>
     </button>
   </div>
   <nav class="mobile-drawer" id="mobile-drawer" aria-label="Mobile navigation" aria-hidden="true">
-    <a href="/about">About</a>
-    <a href="/sessions">Sessions</a>
-    <a href="/booklist">Booklist</a>
-    <a href="/engagements">Engagements</a>
-    <a href="/join">Join</a>
-    <a href="/faqs">FAQs</a>
-    <a href="/contact">Contact</a>
+    <a href="${BASE}/about">About</a>
+    <a href="${BASE}/sessions">Sessions</a>
+    <a href="${BASE}/booklist">Booklist</a>
+    <a href="${BASE}/engagements">Engagements</a>
+    <a href="${BASE}/join">Join</a>
+    <a href="${BASE}/faqs">FAQs</a>
+    <a href="${BASE}/contact">Contact</a>
   </nav>
 </header>`;
 
@@ -38,8 +43,8 @@
 <footer class="site-footer surface-forest" role="contentinfo">
   <div class="container footer-inner">
     <div class="footer-brand">
-      <a href="/" class="footer-wordmark" aria-label="The Ma'na Initiative — home">
-        <img src="/assets/crest.svg" alt="" width="40" height="40" aria-hidden="true">
+      <a href="${BASE}/" class="footer-wordmark" aria-label="The Ma'na Initiative — home">
+        <img src="${BASE}/assets/crest.svg" alt="" width="40" height="40" aria-hidden="true">
         <span class="footer-wordmark-text">The Ma'na Initiative</span>
       </a>
       <p class="footer-tagline">Illuminating minds with authentic Islamic wisdom for a meaningful and purposeful life.</p>
@@ -56,19 +61,19 @@
     <div class="footer-nav">
       <h4>Explore</h4>
       <ul>
-        <li><a href="/about">About</a></li>
-        <li><a href="/sessions">Sessions</a></li>
-        <li><a href="/booklist">Booklist</a></li>
-        <li><a href="/engagements">Engagements</a></li>
+        <li><a href="${BASE}/about">About</a></li>
+        <li><a href="${BASE}/sessions">Sessions</a></li>
+        <li><a href="${BASE}/booklist">Booklist</a></li>
+        <li><a href="${BASE}/engagements">Engagements</a></li>
       </ul>
     </div>
     <div class="footer-nav">
       <h4>Community</h4>
       <ul>
-        <li><a href="/join">Join the circle</a></li>
-        <li><a href="/faqs">FAQs</a></li>
-        <li><a href="/contact">Contact</a></li>
-        <li><a href="/committee">Committee</a></li>
+        <li><a href="${BASE}/join">Join the circle</a></li>
+        <li><a href="${BASE}/faqs">FAQs</a></li>
+        <li><a href="${BASE}/contact">Contact</a></li>
+        <li><a href="${BASE}/committee">Committee</a></li>
       </ul>
     </div>
   </div>
@@ -76,8 +81,8 @@
     <div class="footer-bottom">
       <span>© <span id="footer-year"></span> The Ma'na Initiative · Singapore</span>
       <div class="footer-bottom-links">
-        <a href="/privacy">Privacy</a>
-        <a href="/terms">Terms</a>
+        <a href="${BASE}/privacy">Privacy</a>
+        <a href="${BASE}/terms">Terms</a>
       </div>
     </div>
   </div>
@@ -124,7 +129,7 @@
       banner.classList.add('hidden');
     });
     document.getElementById('cookie-manage').addEventListener('click', function () {
-      window.location.href = '/privacy#cookies';
+      window.location.href = BASE + '/privacy#cookies';
     });
 
     /* Sticky header shadow */
@@ -158,7 +163,8 @@
     const path = window.location.pathname;
     document.querySelectorAll('.nav-left a, .nav-right a, .mobile-drawer a').forEach(a => {
       const href = a.getAttribute('href');
-      if (href === '/' ? path === '/' : path.startsWith(href)) {
+      const rootHref = BASE + '/';
+      if (href === rootHref ? path === rootHref || path === BASE : path.startsWith(href)) {
         a.classList.add('active');
         a.setAttribute('aria-current', 'page');
       }

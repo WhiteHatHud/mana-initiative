@@ -1,16 +1,27 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    // Vercel serves this file at /sessions/:slug; set base so relative paths resolve from root.
+    // On GitHub Pages, base points to the repo subdirectory.
+    (function () {
+      var b = document.createElement('base');
+      b.href = location.hostname.endsWith('.github.io')
+        ? '/' + location.pathname.split('/').filter(Boolean)[0] + '/'
+        : '/';
+      document.head.insertBefore(b, document.head.firstChild);
+    })();
+  </script>
   <title>Session — The Ma'na Initiative</title>
   <meta name="description" content="Register for or watch recordings of Ma'na Initiative reading sessions.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600;1,700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/tokens.css">
-  <link rel="stylesheet" href="/css/base.css">
-  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
   <style>
     .session-detail-wrap {
       display: grid;
@@ -66,10 +77,10 @@
   </main>
   <div id="footer-root"></div>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-  <script src="/js/config.js"></script>
-  <script src="/js/utils.js"></script>
-  <script src="/js/db.js"></script>
-  <script src="/js/layout.js"></script>
-  <script src="/js/session-detail.js" defer></script>
+  <script src="js/config.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/db.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/session-detail.js" defer></script>
 </body>
 </html>

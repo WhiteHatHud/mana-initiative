@@ -1,15 +1,42 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    // GitHub Pages routing: redirect clean URLs to .html files.
+    // This runs before styles load so redirects are instant.
+    (function () {
+      var isGhPages = location.hostname.endsWith('.github.io');
+      var base = isGhPages ? '/' + location.pathname.split('/').filter(Boolean)[0] : '';
+      var path = location.pathname.replace(base, '').replace(/\/$/, '') || '/';
+
+      // /sessions/:slug → session-detail.html?slug=:slug
+      var sessionMatch = path.match(/^\/sessions\/([^/]+)$/);
+      if (sessionMatch) {
+        location.replace(base + '/session-detail.html?slug=' + encodeURIComponent(sessionMatch[1]));
+        return;
+      }
+
+      // /about → /about.html  (only for paths without an extension)
+      if (path !== '/' && !/\.[a-z]+$/i.test(path)) {
+        location.replace(base + path + '.html');
+        return;
+      }
+
+      // True 404 — fix base so relative asset paths load correctly
+      var b = document.createElement('base');
+      b.href = base ? base + '/' : '/';
+      document.head.insertBefore(b, document.currentScript);
+    })();
+  </script>
   <title>Page not found — The Ma'na Initiative</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/tokens.css">
-  <link rel="stylesheet" href="/css/base.css">
-  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
 </head>
 <body>
   <div id="nav-root"></div>
@@ -22,17 +49,17 @@
           This page doesn't exist or may have moved. Let's get you back on track.
         </p>
         <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
-          <a href="/" class="btn btn-primary">Go home</a>
-          <a href="/sessions" class="btn btn-ghost">See sessions</a>
+          <a href="." class="btn btn-primary">Go home</a>
+          <a href="sessions" class="btn btn-ghost">See sessions</a>
         </div>
       </div>
     </section>
   </main>
   <div id="footer-root"></div>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-  <script src="/js/config.js"></script>
-  <script src="/js/utils.js"></script>
-  <script src="/js/db.js"></script>
-  <script src="/js/layout.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/db.js"></script>
+  <script src="js/layout.js"></script>
 </body>
 </html>
