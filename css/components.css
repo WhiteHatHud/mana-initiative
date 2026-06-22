@@ -850,13 +850,21 @@
   gap: var(--sp-4);
   padding: var(--sp-5) var(--sp-6);
   width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
   text-align: left;
   background: none;
   border: none;
+  -webkit-appearance: none;
+  appearance: none;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  word-break: break-word;
   cursor: pointer;
   font-family: var(--font-body);
   font-size: var(--text-base);
   font-weight: 600;
+  line-height: var(--leading-snug);
   color: var(--forest);
   transition: color var(--duration);
 }

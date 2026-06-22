@@ -5,7 +5,7 @@
 */
 window.MANA_CONFIG = {
   SUPABASE_URL:      'https://jzrfrbgiekhkiodimuxn.supabase.co',
-  SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp6cm ZyYmdpZWtoa2lvZGltdXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2MTYxOTUsImV4cCI6MjA5NzE5MjE5NX0.sMTr5rZ2t0EoNZlCR_ga4Q5gq4Z-sLGRwHsl2JDqoAA',
+  SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp6cmZyYmdpZWtoa2lvZGltdXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2MTYxOTUsImV4cCI6MjA5NzE5MjE5NX0.sMTr5rZ2t0EoNZlCR_ga4Q5gq4Z-sLGRwHsl2JDqoAA',
 
   /* Site meta */
   SITE_NAME:    'The Ma\'na Initiative',

@@ -218,8 +218,10 @@
                 </select>
               </div>
               <div class="admin-form-group">
-                <label class="admin-form-label" for="b-cover">Cover image URL</label>
-                <input class="admin-form-input" type="url" id="b-cover" name="cover_url" placeholder="https://…">
+                <label class="admin-form-label" for="b-cover-file">Cover image</label>
+                <input type="file" id="b-cover-file" accept="image/*" style="margin-bottom:.5rem;">
+                <span id="b-cover-upload-status" style="font-size:var(--text-xs);color:var(--muted);display:none;margin-bottom:.5rem;"></span>
+                <input class="admin-form-input" type="url" id="b-cover" name="cover_url" placeholder="URL auto-filled after upload, or paste manually">
               </div>
               <div class="admin-form-group" style="grid-column:1/-1;">
                 <label class="admin-form-label" for="b-supplier">Supplier note (internal)</label>

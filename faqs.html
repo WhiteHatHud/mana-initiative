@@ -26,78 +26,10 @@
     <section class="section surface-cream">
       <div class="container">
         <div style="max-width:800px;">
-          <!-- Static FAQs always shown (from the deck) -->
-          <div class="faq-list" id="static-faqs">
-            <div class="faq-item">
-              <button class="faq-question" aria-expanded="false" aria-controls="faq-s1">
-                How often are sessions held, and where?
-                <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-              </button>
-              <div class="faq-answer" id="faq-s1" role="region">
-                <div class="faq-answer-inner">
-                  Sessions are held roughly once a month. You can attend in-person or online — the choice is yours. Recordings are provided after each session, so you'll never miss out.
-                </div>
-              </div>
-            </div>
-            <div class="faq-item">
-              <button class="faq-question" aria-expanded="false" aria-controls="faq-s2">
-                What is the commitment level?
-                <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-              </button>
-              <div class="faq-answer" id="faq-s2" role="region">
-                <div class="faq-answer-inner">
-                  Flexible and self-paced — entirely up to you. We only ask that you come with the intention to learn. Some members attend every session; others dip in when they can. Both are welcome.
-                </div>
-              </div>
-            </div>
-            <div class="faq-item">
-              <button class="faq-question" aria-expanded="false" aria-controls="faq-s3">
-                What types of books do you read?
-                <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-              </button>
-              <div class="faq-answer" id="faq-s3" role="region">
-                <div class="faq-answer-inner">
-                  We read texts on Islam, theology, Sufism, philosophy, and other genres — both classical and contemporary, covering ethics, spirituality, secularism, and society. See the full <a href="booklist" style="color:var(--forest);">Booklist</a>.
-                </div>
-              </div>
-            </div>
-            <div class="faq-item">
-              <button class="faq-question" aria-expanded="false" aria-controls="faq-s4">
-                How do I access the books?
-                <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-              </button>
-              <div class="faq-answer" id="faq-s4" role="region">
-                <div class="faq-answer-inner">
-                  Ma'na works with a supplier to source books at better prices. Books are batch-ordered as needed — use the "Express interest" button on any title in the <a href="booklist" style="color:var(--forest);">Booklist</a> and we'll be in touch when your book is available.
-                </div>
-              </div>
-            </div>
-            <div class="faq-item">
-              <button class="faq-question" aria-expanded="false" aria-controls="faq-s5">
-                Do I need to know Arabic or have prior Islamic knowledge?
-                <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-              </button>
-              <div class="faq-answer" id="faq-s5" role="region">
-                <div class="faq-answer-inner">
-                  No. Sessions are designed to be accessible regardless of your background. If you can't read the material ahead of time, you can still follow along. Our Asatizah guide discussions with care, and there are no silly questions.
-                </div>
-              </div>
-            </div>
-            <div class="faq-item">
-              <button class="faq-question" aria-expanded="false" aria-controls="faq-s6">
-                Is there a membership fee?
-                <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-              </button>
-              <div class="faq-answer" id="faq-s6" role="region">
-                <div class="faq-answer-inner">
-                  No membership fee. Sessions are free to attend. You only pay for the books you personally order — which we help source at better-than-retail prices.
-                </div>
-              </div>
-            </div>
+          <!-- All FAQs loaded from database -->
+          <div class="faq-list" id="dynamic-faqs">
+            <p style="color:var(--muted);">Loading…</p>
           </div>
-
-          <!-- Dynamic FAQs from Supabase -->
-          <div class="faq-list" id="dynamic-faqs" style="margin-top:0.5rem;"></div>
 
           <div style="margin-top:3rem; padding:2rem; background:var(--cream-2); border-radius:var(--radius-card); border:1px solid var(--border-light);">
             <h3 style="font-size:var(--text-xl);color:var(--forest);margin-bottom:.75rem;">Still have questions?</h3>
@@ -115,29 +47,26 @@
   <script src="js/db.js"></script>
   <script src="js/layout.js"></script>
   <script>
-    /* FAQ accordion logic */
-    function initAccordions() {
-      document.querySelectorAll('.faq-question').forEach(btn => {
-        if (btn.dataset.faqInit) return;
-        btn.dataset.faqInit = '1';
+    function initAccordions(root) {
+      root.querySelectorAll('.faq-question').forEach(btn => {
         btn.addEventListener('click', function () {
           const expanded = this.getAttribute('aria-expanded') === 'true';
-          const answerId = this.getAttribute('aria-controls');
-          const answer   = document.getElementById(answerId);
+          const answer   = document.getElementById(this.getAttribute('aria-controls'));
           if (!answer) return;
           this.setAttribute('aria-expanded', String(!expanded));
           answer.classList.toggle('open', !expanded);
         });
       });
     }
-    initAccordions();
 
-    /* Load extra FAQs from Supabase */
     document.addEventListener('DOMContentLoaded', async function () {
       const container = document.getElementById('dynamic-faqs');
       try {
         const faqs = await window.getFAQs();
-        if (!faqs.length) return;
+        if (!faqs.length) {
+          container.innerHTML = '<div class="empty-state"><p>No FAQs yet — check back soon.</p></div>';
+          return;
+        }
         container.innerHTML = faqs.map((f, i) => `
           <div class="faq-item">
             <button class="faq-question" aria-expanded="false" aria-controls="faq-d${i}">
@@ -148,9 +77,10 @@
               <div class="faq-answer-inner">${MANA.esc(f.answer)}</div>
             </div>
           </div>`).join('');
-        initAccordions();
+        initAccordions(container);
       } catch (err) {
         console.error(err);
+        container.innerHTML = '<p style="color:var(--error);">Could not load FAQs — please try refreshing.</p>';
       }
     });
   </script>

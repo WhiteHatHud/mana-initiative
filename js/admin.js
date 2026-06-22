@@ -37,7 +37,9 @@
       const { data, error } = await auth.signInWithPassword({ email, password });
       if (error) throw error;
       showShell(data.user.email);
-    } catch {
+    } catch (err) {
+      console.error('Admin login error:', err);
+      errEl.textContent = err?.message || 'Invalid email or password.';
       errEl.classList.add('show');
     } finally {
       btn.disabled = false;
@@ -80,14 +82,41 @@
       if (el.type === 'checkbox') out[el.name] = el.checked;
       else out[el.name] = el.value || null;
     });
-    if (out.id === '') delete out.id;
+    if (!out.id) delete out.id;
     return out;
   }
-  function showMsg(okId, errId, type) {
-    document.getElementById(okId).classList.remove('show');
-    document.getElementById(errId).classList.remove('show');
-    document.getElementById(type === 'ok' ? okId : errId).classList.add('show');
-    setTimeout(() => { document.getElementById(okId).classList.remove('show'); document.getElementById(errId).classList.remove('show'); }, 3000);
+  function showMsg(okId, errId, type, msg) {
+    const okEl  = document.getElementById(okId);
+    const errEl = document.getElementById(errId);
+    okEl.classList.remove('show');
+    errEl.classList.remove('show');
+    if (type === 'ok') {
+      okEl.classList.add('show');
+    } else {
+      if (msg) errEl.textContent = msg;
+      errEl.classList.add('show');
+    }
+    setTimeout(() => { okEl.classList.remove('show'); errEl.classList.remove('show'); }, 5000);
+  }
+
+  /* Highlight missing required fields and return list of labels */
+  function validateRequired(form, fields) {
+    const missing = [];
+    fields.forEach(({ id, label }) => {
+      const el = form.querySelector('#' + id);
+      if (!el) return;
+      const empty = el.tagName === 'SELECT' ? !el.value : !el.value.trim();
+      el.style.borderColor = empty ? 'var(--error)' : '';
+      el.style.boxShadow   = empty ? '0 0 0 2px rgba(178,58,46,.25)' : '';
+      if (empty) missing.push(label);
+    });
+    return missing;
+  }
+
+  /* Clear validation highlights when user edits a field */
+  function clearValidation(el) {
+    el.style.borderColor = '';
+    el.style.boxShadow   = '';
   }
   function makeActionBtns(table, id, editFn, deleteFn) {
     const editBtn = document.createElement('button');
@@ -152,13 +181,32 @@
   document.getElementById('s-cancel').addEventListener('click', () => document.getElementById('session-editor').classList.remove('active'));
   document.getElementById('session-form').addEventListener('submit', async function (e) {
     e.preventDefault();
+    const required = [
+      { id: 's-title',  label: 'Title' },
+      { id: 's-slug',   label: 'Slug'  },
+      { id: 's-date',   label: 'Date'  },
+      { id: 's-medium', label: 'Medium' },
+    ];
+    const missing = validateRequired(this, required);
+    if (missing.length) {
+      showMsg('s-save-ok', 's-save-err', 'err', `Please fill in: ${missing.join(', ')}`);
+      return;
+    }
     const data = readForm(this);
     try {
       await window.adminUpsert('sessions', data);
       showMsg('s-save-ok', 's-save-err', 'ok');
       document.getElementById('session-editor').classList.remove('active');
       loadSessions();
-    } catch { showMsg('s-save-ok', 's-save-err', 'err'); }
+    } catch (err) {
+      console.error('Session save error:', err);
+      showMsg('s-save-ok', 's-save-err', 'err', err?.message || 'Error saving — please try again.');
+    }
+  });
+  ['s-title','s-slug','s-date','s-medium'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', () => clearValidation(el));
+    if (el) el.addEventListener('change', () => clearValidation(el));
   });
   /* Auto-slug from title */
   document.getElementById('s-title').addEventListener('input', function () {
@@ -201,15 +249,52 @@
     document.getElementById('book-editor').scrollIntoView({ behavior:'smooth', block:'nearest' });
   });
   document.getElementById('b-cancel').addEventListener('click', () => document.getElementById('book-editor').classList.remove('active'));
+
+  document.getElementById('b-cover-file').addEventListener('change', async function () {
+    const file = this.files[0];
+    if (!file) return;
+    const status = document.getElementById('b-cover-upload-status');
+    status.textContent = 'Uploading…';
+    status.style.display = 'block';
+    try {
+      const ext = file.name.split('.').pop();
+      const path = `covers/${Date.now()}.${ext}`;
+      const url = await window.adminUploadImage('book-covers', file, path);
+      document.getElementById('b-cover').value = url;
+      status.textContent = 'Uploaded ✓';
+    } catch (err) {
+      console.error('Cover upload error:', err);
+      status.textContent = 'Upload failed — check that the book-covers bucket exists in Supabase Storage.';
+    }
+  });
+
   document.getElementById('book-form').addEventListener('submit', async function (e) {
     e.preventDefault();
+    const required = [
+      { id: 'b-title',  label: 'Title'  },
+      { id: 'b-slug',   label: 'Slug'   },
+      { id: 'b-status', label: 'Status' },
+    ];
+    const missing = validateRequired(this, required);
+    if (missing.length) {
+      showMsg('b-save-ok', 'b-save-err', 'err', `Please fill in: ${missing.join(', ')}`);
+      return;
+    }
     const data = readForm(this);
     try {
       await window.adminUpsert('books', data);
       showMsg('b-save-ok', 'b-save-err', 'ok');
       document.getElementById('book-editor').classList.remove('active');
       loadBooks();
-    } catch { showMsg('b-save-ok', 'b-save-err', 'err'); }
+    } catch (err) {
+      console.error('Book save error:', err);
+      showMsg('b-save-ok', 'b-save-err', 'err', err?.message || 'Error saving.');
+    }
+  });
+  ['b-title','b-slug','b-status'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', () => clearValidation(el));
+    if (el) el.addEventListener('change', () => clearValidation(el));
   });
   document.getElementById('b-title').addEventListener('input', function () {
     const slugField = document.getElementById('b-slug');
@@ -380,18 +465,25 @@
   });
 
   /* ── Stats ── */
+  async function countTable(table) {
+    const { count, error } = await window.MANA_DB.from(table).select('*', { count: 'exact', head: true });
+    if (error) throw error;
+    return count;
+  }
+
   async function loadStats() {
-    const counts = await Promise.allSettled([
-      window.adminGetAll('sessions'),
-      window.adminGetAll('books'),
-      window.adminGetAll('registrations'),
-      window.adminGetAll('subscribers'),
-    ]);
-    const vals = counts.map(r => r.status === 'fulfilled' ? r.value.length : '?');
-    document.getElementById('stat-sessions').textContent       = vals[0];
-    document.getElementById('stat-books').textContent          = vals[1];
-    document.getElementById('stat-registrations').textContent  = vals[2];
-    document.getElementById('stat-subscribers').textContent    = vals[3];
+    const tables = ['sessions', 'books', 'registrations', 'subscribers'];
+    const ids    = ['stat-sessions', 'stat-books', 'stat-registrations', 'stat-subscribers'];
+    const results = await Promise.allSettled(tables.map(t => countTable(t)));
+    results.forEach((r, i) => {
+      const el = document.getElementById(ids[i]);
+      if (r.status === 'fulfilled') {
+        el.textContent = r.value;
+      } else {
+        console.error(`Stats error (${tables[i]}):`, r.reason);
+        el.textContent = '—';
+      }
+    });
   }
 
   async function loadAllData() {
